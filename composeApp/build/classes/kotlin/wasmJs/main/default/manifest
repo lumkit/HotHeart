@@ -1,0 +1,12 @@
+abi_version=2.2.0
+builtins_platform=WASM
+compiler_version=2.2.21
+depends=kotlin components.resources\:library components.ui-tooling-preview\:library org.jetbrains.kotlinx\:kotlinx-serialization-json org.jetbrains.compose.material3\:material3 org.jetbrains.compose.material\:material-ripple org.jetbrains.compose.foundation\:foundation org.jetbrains.androidx.lifecycle\:lifecycle-viewmodel-compose org.jetbrains.compose.animation\:animation org.jetbrains.compose.foundation\:foundation-layout org.jetbrains.compose.ui\:ui org.jetbrains.kotlinx\:kotlinx-browser org.jetbrains.androidx.lifecycle\:lifecycle-runtime-compose org.jetbrains.androidx.lifecycle\:lifecycle-common org.jetbrains.androidx.lifecycle\:lifecycle-viewmodel org.jetbrains.androidx.lifecycle\:lifecycle-viewmodel-savedstate androidx.lifecycle\:lifecycle-runtime androidx.lifecycle\:lifecycle-viewmodel-savedstate androidx.lifecycle\:lifecycle-viewmodel androidx.lifecycle\:lifecycle-common androidx.lifecycle\:lifecycle-runtime-compose org.jetbrains.compose.runtime\:runtime-saveable org.jetbrains.compose.runtime\:runtime androidx.compose.runtime\:runtime-annotation androidx.compose.runtime\:runtime androidx.compose.runtime\:runtime-saveable androidx.savedstate\:savedstate-compose androidx.savedstate\:savedstate androidx.annotation\:annotation org.jetbrains.kotlinx\:kotlinx-serialization-core org.jetbrains.compose.animation\:animation-core org.jetbrains.kotlinx\:kotlinx-coroutines-core org.jetbrains.kotlinx\:atomicfu org.jetbrains.compose.ui\:ui-text org.jetbrains.compose.ui\:ui-graphics org.jetbrains.compose.ui\:ui-unit org.jetbrains.skiko\:skiko org.jetbrains.compose.ui\:ui-geometry org.jetbrains.compose.ui\:ui-util
+ir_signature_versions=1,2
+jsOutputName=hotheart-composeApp
+language_features=+AllowAnyAsAnActualTypeForExpectInterface +JsAllowImplementingFunctionInterface +JsAllowValueClassesInExternals +MultiPlatformProjects
+metadata_version=1.4.1
+serializedIrFileFingerprints=2o3qtznimkax4.lqmzwan63j67 1xdwl1jm5xyts.3lryc76sc4rzt 3szlqjx4y0sb9.1dk06i5bn1wih lwxb09j75u1h.zuw7sjy25yvf 34d8n0u1l2xno.2t7q2k02tnlue 1c1t6c8vu2ob1.34lx4nd2vjaxz 39htkhtmh43ba.2dzdwgif0otql 33ni65mhov6om.107pgljim1ji6 35qpr7df7risy.2717an4s65f3h 1a1fdxlzer7k.10u6z0v3grn8k 3di8e5x20hmrf.2bmdypu5kysvm x7wtvd8t326w.1ti1lvdbfi1vc
+serializedKlibFingerprint=1ytrw6emysrc7.2zsjtcuvbrb1w
+unique_name=hotheart\:composeApp
+wasm_targets=wasm-js

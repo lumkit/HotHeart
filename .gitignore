@@ -29,4 +29,5 @@ replay_pid*
 **/build/**
 .idea/**
 *.apk
+*.APK
 .gradle/**

@@ -55,10 +55,15 @@ class HeartMsgProvider {
 
     suspend fun init() {
         msgText = Res.readBytes("files/msg").decodeToString().split("\n")
-        colors = colorsName.map {
-            val text = Res.readBytes("files/colors/$it").decodeToString()
-            string2Colors(text)
-        }.flatten()
+//        colors = colorsName.map {
+//            val text = Res.readBytes("files/colors/$it").decodeToString()
+//            string2Colors(text)
+//        }.flatten()
+        colors = Res.readBytes("files/colors").decodeToString().split("\n")
+            .filter { it.isNotBlank() }
+            .map {
+                it.toComposeColor()
+            }
     }
 
     fun setTextMsg(msg: String) {

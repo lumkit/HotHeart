@@ -3,20 +3,28 @@ package com.example.heart.hotheart
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import com.example.heart.hotheart.data.HeartMsg
 import com.example.heart.hotheart.ui.typography
@@ -53,7 +61,7 @@ fun App() {
                 val list = msgList.toMutableList()
                 list += provider.createHeartMsg(boxSize)
                 msgList = list.let {
-                    if (it.size > maxMsgCount) it.takeLast(maxMsgCount - 100) else it
+                    if (it.size > maxMsgCount) it.takeLast((maxMsgCount * .9f).roundToInt()) else it
                 }
             }
         }
@@ -196,28 +204,66 @@ private fun MsgCard(msg: HeartMsg) {
     val scope = rememberCoroutineScope()
     val composeColor = msg.backgroundColor.toComposeColor()
 
+    val textMeasurer = rememberTextMeasurer()
+    val textStyle = MaterialTheme.typography.titleMedium
+    val layoutResult = remember(msg.msg, textStyle) {
+        textMeasurer.measure(AnnotatedString(msg.msg), style = textStyle, maxLines = 1)
+    }
+
+    val widthDp = with(density) { layoutResult.size.width.toDp() }
+
     LaunchedEffect(msg) {
         msg.startAnimate()
     }
 
-    DisposableEffect(msg) {
-        onDispose {
-            scope.launch {
-                msg.stopAnimate()
+    Surface(
+        modifier = Modifier.offset(msg.offsetX.dp, msg.offsetY.dp - with(density) { msg.offset.value.toDp() })
+            .rotate(msg.rotation.value)
+            .alpha(msg.alpha.value)
+            .scale(msg.scale.value),
+        color = composeColor,
+        shape = RoundedCornerShape(8.dp),
+        shadowElevation = 4.dp,
+    ) {
+        Column {
+            Row(
+                modifier = Modifier.width(widthDp + 96.dp)
+                    .background(Color(0xAAFFFFFF))
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Box(
+                    modifier = Modifier.size(8.dp)
+                        .clip(CircleShape)
+                        .background(Color(0xFFF7574F))
+                )
+                Box(
+                    modifier = Modifier.size(8.dp)
+                        .clip(CircleShape)
+                        .background(Color(0xFFF9B42B))
+                )
+                Box(
+                    modifier = Modifier.size(8.dp)
+                        .clip(CircleShape)
+                        .background(Color(0xFF28BC3C))
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = "I MISS YOU",
+                    style = MaterialTheme.typography.labelSmall,
+                    fontSize = 10.sp,
+                    lineHeight = 10.sp,
+                )
             }
+
+            Text(
+                text = msg.msg,
+                style = textStyle,
+                color = msg.textColor.toComposeColor(),
+                modifier = Modifier
+                    .padding(vertical = 12.dp, horizontal = 48.dp)
+            )
         }
     }
-
-    Text(
-        text = msg.msg,
-        style = MaterialTheme.typography.titleMedium,
-        color = msg.textColor.toComposeColor(),
-        modifier = Modifier.offset(msg.offsetX.dp, msg.offsetY.dp - with(density) { msg.offset.value.toDp() })
-            .alpha(msg.alpha.value)
-            .scale(msg.scale.value)
-            .shadow(elevation = 16.dp)
-            .clip(RoundedCornerShape(12.dp))
-            .background(color = composeColor)
-            .padding(vertical = 12.dp, horizontal = 48.dp),
-    )
 }

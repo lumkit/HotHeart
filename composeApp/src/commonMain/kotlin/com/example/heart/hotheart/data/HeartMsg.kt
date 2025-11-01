@@ -2,6 +2,8 @@ package com.example.heart.hotheart.data
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,7 +28,7 @@ data class HeartMsg(
     val textColor: String,
 ) {
 
-    var visibility by mutableStateOf(false)
+    private var visibility = false
 
     @Transient
     val alpha = Animatable(0f)
@@ -37,7 +39,12 @@ data class HeartMsg(
     @Transient
     val offset = Animatable(0f)
 
+    @Transient
+    val rotation = Animatable(0f)
+
     suspend fun startAnimate() {
+        if (visibility) return
+        visibility = true
         withContext(Dispatchers.Default) {
             async {
                 alpha.animateTo(
@@ -47,6 +54,12 @@ data class HeartMsg(
             async {
                 scale.animateTo(
                     targetValue = 1f,
+                )
+            }
+            async {
+                rotation.animateTo(
+                    targetValue = Random.nextFloat() * 15f * if (Random.nextBoolean()) 1f else -1f,
+//                    animationSpec = tween(durationMillis = 1500, easing = LinearOutSlowInEasing)
                 )
             }
             async {
